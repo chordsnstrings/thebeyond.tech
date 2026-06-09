@@ -8,12 +8,15 @@ class ResearchArticle extends Model
 {
     protected $fillable = [
         'title', 'slug', 'category', 'author', 'excerpt', 'body', 'cover_image',
-        'meta_title', 'meta_description', 'read_minutes', 'published_at', 'is_published',
+        'meta_title', 'meta_description', 'keywords', 'key_takeaways', 'faqs',
+        'read_minutes', 'published_at', 'is_published',
     ];
 
     protected $casts = [
         'published_at' => 'datetime',
         'is_published' => 'boolean',
+        'key_takeaways' => 'array',
+        'faqs' => 'array',
     ];
 
     public function getRouteKeyName(): string
@@ -27,6 +30,36 @@ class ResearchArticle extends Model
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
             ->orderByDesc('published_at');
+    }
+
+    public function scopeSearch($query, ?string $term)
+    {
+        if (! $term) {
+            return $query;
+        }
+
+        $like = '%'.$term.'%';
+
+        return $query->where(function ($q) use ($like) {
+            $q->where('title', 'like', $like)
+                ->orWhere('excerpt', 'like', $like)
+                ->orWhere('keywords', 'like', $like)
+                ->orWhere('category', 'like', $like);
+        });
+    }
+
+    public function getWordCountAttribute(): int
+    {
+        return max(1, str_word_count(strip_tags((string) $this->body)));
+    }
+
+    public function relatedArticles(int $limit = 3)
+    {
+        return static::published()
+            ->where('id', '!=', $this->id)
+            ->where('category', $this->category)
+            ->take($limit)
+            ->get();
     }
 
     public function getMetaTitleAttribute($value): string

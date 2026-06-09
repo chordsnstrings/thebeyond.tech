@@ -60,6 +60,9 @@ class ResearchController extends Controller
             'cover_image' => ['nullable', 'string', 'max:500'],
             'meta_title' => ['nullable', 'string', 'max:200'],
             'meta_description' => ['nullable', 'string', 'max:500'],
+            'keywords' => ['nullable', 'string', 'max:255'],
+            'key_takeaways' => ['nullable', 'string'],
+            'faqs' => ['nullable', 'string'],
             'read_minutes' => ['required', 'integer', 'min:1', 'max:60'],
             'published_at' => ['nullable', 'date'],
             'is_published' => ['nullable', 'boolean'],
@@ -67,6 +70,17 @@ class ResearchController extends Controller
 
         $data['slug'] = Str::slug($data['slug'] ?: $data['title']);
         $data['is_published'] = $request->boolean('is_published');
+
+        // One takeaway per line.
+        $data['key_takeaways'] = collect(preg_split('/\r?\n/', (string) ($data['key_takeaways'] ?? '')))
+            ->map(fn ($t) => trim($t))->filter()->values()->all();
+
+        // FAQs: "Question :: Answer" per line.
+        $data['faqs'] = collect(preg_split('/\r?\n/', (string) ($data['faqs'] ?? '')))
+            ->map(fn ($line) => array_map('trim', explode('::', $line, 2)))
+            ->filter(fn ($parts) => count($parts) === 2 && $parts[0] !== '' && $parts[1] !== '')
+            ->map(fn ($parts) => ['q' => $parts[0], 'a' => $parts[1]])
+            ->values()->all();
 
         return $data;
     }

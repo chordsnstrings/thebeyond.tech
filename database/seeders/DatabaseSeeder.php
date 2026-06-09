@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->seedAdmin();
         $this->seedCapabilities();
         $this->seedCompanies();
-        $this->seedResearch();
+        $this->call(ResearchArticleSeeder::class);
     }
 
     protected function seedAdmin(): void
@@ -110,61 +110,5 @@ class DatabaseSeeder extends Seeder
                 array_merge($item, ['sort_order' => $i, 'is_published' => true])
             );
         }
-    }
-
-    protected function seedResearch(): void
-    {
-        $items = [
-            [
-                'title' => 'Operating models in production: lessons from fleet-scale AI',
-                'category' => 'Applied AI',
-                'author' => 'Beyond Research',
-                'read_minutes' => 7,
-                'excerpt' => 'What it takes to move forecasting and routing models from notebooks to a live electric fleet — and keep them honest.',
-            ],
-            [
-                'title' => 'A shared data backbone across four industries',
-                'category' => 'Data & Platforms',
-                'author' => 'Beyond Research',
-                'read_minutes' => 6,
-                'excerpt' => 'How a single data platform connects mobility, energy, migration and wellness — and why that compounds.',
-            ],
-            [
-                'title' => 'Document AI for high-stakes workflows',
-                'category' => 'Research',
-                'author' => 'Beyond Research',
-                'read_minutes' => 5,
-                'excerpt' => 'Designing extraction and review systems where accuracy, auditability and trust are non-negotiable.',
-            ],
-        ];
-
-        foreach ($items as $i => $item) {
-            ResearchArticle::updateOrCreate(
-                ['slug' => \Illuminate\Support\Str::slug($item['title'])],
-                array_merge($item, [
-                    'body' => $this->sampleBody(),
-                    'is_published' => true,
-                    'published_at' => now()->subDays(($i + 1) * 9),
-                    'meta_description' => $item['excerpt'],
-                ])
-            );
-        }
-    }
-
-    protected function sampleBody(): string
-    {
-        return <<<'HTML'
-<p>At Beyond, research is not a side project — it is the mechanism by which the ARKS portfolio stays ahead. Every model, platform and product decision is grounded in evidence and pressure-tested against real operations.</p>
-<h2>From frontier to floor</h2>
-<p>We treat the gap between a promising method and a dependable production system as the real work. That means rigorous evaluation, careful instrumentation, and a bias toward systems that degrade gracefully.</p>
-<blockquote>The goal is not the most sophisticated model. It is the most dependable advantage.</blockquote>
-<h3>What we measure</h3>
-<ul>
-<li>Operational impact, not benchmark scores in isolation.</li>
-<li>Latency and cost at the scale our companies actually run.</li>
-<li>Auditability and trust for high-stakes decisions.</li>
-</ul>
-<p>This is how a single technology engine can compound advantage across mobility, energy, migration and wellness at once.</p>
-HTML;
     }
 }

@@ -4,6 +4,7 @@
     <url>
         <loc>{{ $url['loc'] }}</loc>
         @isset($url['lastmod'])<lastmod>{{ $url['lastmod'] }}</lastmod>@endisset
+        @isset($url['changefreq'])<changefreq>{{ $url['changefreq'] }}</changefreq>@endisset
         <priority>{{ $url['priority'] }}</priority>
     </url>
 @endforeach

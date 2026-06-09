@@ -34,7 +34,7 @@ class Seo
             title: $full,
             description: $description ?: config('site.description'),
             canonical: url($path ?? '/'),
-            image: $image,
+            image: $image ? url($image) : url('/images/og-default.svg'),
             type: $type,
             structuredData: $structuredData,
         );

@@ -44,7 +44,56 @@ class SiteTest extends TestCase
     {
         $this->get('/sitemap.xml')
             ->assertOk()
-            ->assertHeader('Content-Type', 'application/xml');
+            ->assertHeader('Content-Type', 'application/xml; charset=utf-8')
+            ->assertSee('<urlset', false);
+    }
+
+    public function test_llms_txt_is_served(): void
+    {
+        $this->get('/llms.txt')
+            ->assertOk()
+            ->assertHeader('Content-Type', 'text/plain; charset=utf-8')
+            ->assertSee('# Beyond')
+            ->assertSee('## Research & guides', false);
+    }
+
+    public function test_rss_feed_is_served(): void
+    {
+        $this->get('/feed.xml')
+            ->assertOk()
+            ->assertSee('<rss', false)
+            ->assertSee('Research', false);
+    }
+
+    public function test_article_emits_faq_and_breadcrumb_schema(): void
+    {
+        $slug = \App\Models\ResearchArticle::published()
+            ->whereNotNull('faqs')->value('slug');
+
+        $this->get('/research/'.$slug)
+            ->assertOk()
+            ->assertSee('"@type":"FAQPage"', false)
+            ->assertSee('"@type":"BreadcrumbList"', false)
+            ->assertSee('Key takeaways');
+    }
+
+    public function test_research_search_filters_results(): void
+    {
+        $this->get('/research?q=charging')
+            ->assertOk()
+            ->assertSee('EV Charging in Dubai');
+
+        $this->get('/research?q=zzzznomatch')
+            ->assertOk()
+            ->assertSee('No articles match');
+    }
+
+    public function test_home_emits_website_schema_with_search_action(): void
+    {
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('"@type":"WebSite"', false)
+            ->assertSee('SearchAction', false);
     }
 
     public function test_mobile_user_agent_receives_mobile_templates(): void

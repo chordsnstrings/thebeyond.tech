@@ -3,27 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\Models\ResearchArticle;
+use App\Support\Schema;
 use App\Support\Seo;
+use Illuminate\Http\Request;
 
 class ResearchController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $articles = ResearchArticle::published()->paginate(9);
+        $query = trim((string) $request->query('q', ''));
+        $category = trim((string) $request->query('category', ''));
+
+        $articles = ResearchArticle::published()
+            ->when($query, fn ($q) => $q->search($query))
+            ->when($category, fn ($q) => $q->where('category', $category))
+            ->paginate(9)
+            ->withQueryString();
+
+        $categories = ResearchArticle::published()
+            ->select('category')->distinct()->orderBy('category')->pluck('category');
+
+        $title = 'Research & Insights';
+        if ($category) {
+            $title = $category.' — Research';
+        }
 
         $seo = Seo::make(
-            title: 'Research & Insights',
-            description: 'Applied research and perspectives on AI, data and engineering '
-                .'from the team building the ARKS technology stack.',
+            title: $title,
+            description: 'Applied research and practical guides on AI, electric mobility, EV charging, '
+                .'relocation technology and data from the team building the ARKS technology stack.',
             path: '/research',
+            structuredData: [
+                Schema::breadcrumb([
+                    ['name' => 'Home', 'url' => url('/')],
+                    ['name' => 'Research', 'url' => url('/research')],
+                ]),
+                Schema::collectionPage($title, url('/research'), $articles->getCollection()),
+            ],
         );
 
-        return view('pages.research-index', compact('seo', 'articles'));
+        return view('pages.research-index', compact('seo', 'articles', 'categories', 'query', 'category'));
     }
 
     public function show(ResearchArticle $article)
     {
         abort_unless($article->is_published && $article->published_at?->isPast(), 404);
+
+        $related = $article->relatedArticles();
+
+        $structured = [
+            Schema::article($article),
+            Schema::breadcrumb([
+                ['name' => 'Home', 'url' => url('/')],
+                ['name' => 'Research', 'url' => url('/research')],
+                ['name' => $article->title, 'url' => url('/research/'.$article->slug)],
+            ]),
+        ];
+
+        if (! empty($article->faqs)) {
+            $structured[] = Schema::faq($article->faqs);
+        }
 
         $seo = Seo::make(
             title: $article->meta_title,
@@ -31,30 +70,9 @@ class ResearchController extends Controller
             path: '/research/'.$article->slug,
             image: $article->cover_image,
             type: 'article',
-            structuredData: [$this->articleSchema($article)],
+            structuredData: $structured,
         );
 
-        return view('pages.research-show', compact('seo', 'article'));
-    }
-
-    protected function articleSchema(ResearchArticle $article): array
-    {
-        return [
-            '@context' => 'https://schema.org',
-            '@type' => 'Article',
-            'headline' => $article->title,
-            'description' => $article->excerpt,
-            'author' => [
-                '@type' => 'Organization',
-                'name' => $article->author,
-            ],
-            'publisher' => [
-                '@type' => 'Organization',
-                'name' => config('site.legal_name'),
-            ],
-            'datePublished' => $article->published_at?->toIso8601String(),
-            'dateModified' => $article->updated_at?->toIso8601String(),
-            'mainEntityOfPage' => url('/research/'.$article->slug),
-        ];
+        return view('pages.research-show', compact('seo', 'article', 'related'));
     }
 }

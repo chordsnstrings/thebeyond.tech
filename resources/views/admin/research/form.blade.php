@@ -44,6 +44,15 @@
         <div class="field"><label>Meta description (SEO)</label>
             <input type="text" name="meta_description" value="{{ old('meta_description', $article->meta_description) }}"></div>
 
+        <div class="field"><label>Keywords (comma separated, for SEO/LLM context)</label>
+            <input type="text" name="keywords" value="{{ old('keywords', $article->keywords) }}"></div>
+
+        <div class="field"><label>Key takeaways (one per line — renders a summary box + helps LLM extraction)</label>
+            <textarea name="key_takeaways" style="min-height:120px">{{ old('key_takeaways', collect($article->key_takeaways ?? [])->implode("\n")) }}</textarea></div>
+
+        <div class="field"><label>FAQs (one per line, format: Question :: Answer — powers FAQ rich results)</label>
+            <textarea name="faqs" style="min-height:140px">{{ old('faqs', collect($article->faqs ?? [])->map(fn($f) => ($f['q'] ?? '').' :: '.($f['a'] ?? ''))->implode("\n")) }}</textarea></div>
+
         <div class="field"><label>Publish date</label>
             <input type="datetime-local" name="published_at"
                    value="{{ old('published_at', optional($article->published_at)->format('Y-m-d\TH:i')) }}"></div>

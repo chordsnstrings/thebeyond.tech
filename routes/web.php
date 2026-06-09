@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\PortfolioController as AdminPortfolioController;
 use App\Http\Controllers\Admin\ResearchController as AdminResearchController;
 use App\Http\Controllers\Admin\SubmissionController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DiscoveryController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ResearchController;
 use App\Http\Controllers\SitemapController;
@@ -30,6 +31,8 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 Route::post('/subscribe', [ContactController::class, 'subscribe'])->name('subscribe');
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index']);
+Route::get('/feed.xml', [DiscoveryController::class, 'feed'])->name('feed');
+Route::get('/llms.txt', [DiscoveryController::class, 'llms']);
 
 /*
 |--------------------------------------------------------------------------
