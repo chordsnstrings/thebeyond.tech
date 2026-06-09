@@ -113,9 +113,23 @@ Because `public/build` is committed, pulling new code ships the latest CSS/JS au
 If you change front-end source locally, run `npm run build` and commit the result before pulling
 on the server.
 
+> Tip: `php artisan optimize` runs the config/route/view caches in one step,
+> and `php artisan optimize:clear` reverses them.
+
 ## Verify
 
 - `https://www.thebeyond.tech/` loads with the hero animation.
-- `https://www.thebeyond.tech/sitemap.xml` returns XML.
+- `https://www.thebeyond.tech/sitemap.xml` returns XML; `/feed.xml`, `/llms.txt`, `/robots.txt` load.
 - `https://www.thebeyond.tech/admin/login` — sign in, confirm content management works.
 - Load the site on a phone and confirm the mobile templates render (or use `?view=mobile`).
+
+## Pre-launch checklist
+
+- [ ] `.env`: `APP_ENV=production`, `APP_DEBUG=false`, correct `APP_URL` (https, with/without `www` — pick one and redirect the other).
+- [ ] Change the seeded admin password (`ADMIN_EMAIL` / `ADMIN_PASSWORD`) before the first `db:seed`.
+- [ ] SSL enabled and HTTP→HTTPS forced.
+- [ ] Run `php artisan optimize` after deploy; re-run on each release.
+- [ ] Verify the domain in **Google Search Console** and **Bing Webmaster Tools**, then submit `sitemap.xml`.
+- [ ] Add analytics (GA4 or Plausible) — drop the snippet into `resources/views/layouts/{desktop,mobile}.blade.php` `@stack('head')` or just before `</body>`.
+- [ ] (Optional) Replace the SVG social image at `public/images/og-default.svg` with a 1200×630 PNG/JPG — some social platforms don't render SVG `og:image`.
+- [ ] Confirm `storage/` and `bootstrap/cache/` are writable.

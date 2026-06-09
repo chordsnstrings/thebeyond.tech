@@ -52,5 +52,14 @@ document.querySelectorAll('.card').forEach((card) => {
     });
 });
 
+/* ----- Wrap article tables so they scroll on narrow screens ----- */
+document.querySelectorAll('.prose table').forEach((table) => {
+    if (table.parentElement && table.parentElement.classList.contains('table-wrap')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'table-wrap';
+    table.parentNode.insertBefore(wrap, table);
+    wrap.appendChild(table);
+});
+
 /* ----- Hero ----- */
 initHero(document.querySelector('[data-hero]'));
