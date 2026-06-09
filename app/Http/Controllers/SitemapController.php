@@ -18,6 +18,7 @@ class SitemapController extends Controller
             '/capabilities' => '0.8',
             '/portfolio' => '0.8',
             '/research' => '0.9',
+            '/glossary' => '0.7',
             '/contact' => '0.6',
         ];
         foreach ($statics as $path => $priority) {
@@ -25,6 +26,15 @@ class SitemapController extends Controller
                 'loc' => url($path),
                 'priority' => $priority,
                 'changefreq' => $path === '/research' ? 'daily' : 'weekly',
+            ];
+        }
+
+        // Category hub pages.
+        foreach (array_keys(config('research_topics')) as $category) {
+            $urls[] = [
+                'loc' => url('/research?category='.urlencode($category)),
+                'priority' => '0.6',
+                'changefreq' => 'weekly',
             ];
         }
 

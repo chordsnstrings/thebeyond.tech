@@ -24,6 +24,10 @@
             </div>
         @endisset
 
+        @if(!empty($topicIntro))
+            <p class="topic-intro" data-reveal>{{ $topicIntro }}</p>
+        @endif
+
         @if($articles->count())
             <div class="grid grid--3" style="margin-top:32px">
                 @foreach($articles as $article)

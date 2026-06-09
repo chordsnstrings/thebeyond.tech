@@ -136,6 +136,27 @@ class SiteTest extends TestCase
         $this->assertSame(0, ContactSubmission::count());
     }
 
+    public function test_glossary_loads_with_defined_term_schema(): void
+    {
+        $this->get('/glossary')
+            ->assertOk()
+            ->assertSee('"@type":"DefinedTermSet"', false)
+            ->assertSee('"@type":"DefinedTerm"', false)
+            ->assertSee('Applied AI');
+    }
+
+    public function test_category_hub_shows_intro_copy(): void
+    {
+        $this->get('/research?category=Applied AI')
+            ->assertOk()
+            ->assertSee('topic-intro', false);
+    }
+
+    public function test_content_library_is_substantial(): void
+    {
+        $this->assertGreaterThanOrEqual(30, \App\Models\ResearchArticle::published()->count());
+    }
+
     public function test_admin_requires_authentication(): void
     {
         $this->get('/admin')->assertRedirect('/admin/login');

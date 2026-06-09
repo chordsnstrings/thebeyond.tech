@@ -44,15 +44,28 @@ Built to be found by both classic search and AI answer engines (GEO/AEO):
 
 ### Content library
 
-The seeder ships a topic-clustered research library targeting winnable, high-intent demand
-(UAE/Dubai long-tail + applied-AI thought leadership):
+The seeders ship a **34-article**, topic-clustered research library targeting winnable, high-intent
+demand (UAE/Dubai long-tail + applied-AI thought leadership), plus a **glossary** and **category
+hub pages**:
 
-- **Electric mobility / EV** — EV charging in Dubai, charging costs, buying an EV, CPOs, fleet AI
-- **Migration** — UAE Golden Visa, moving to Dubai, AI in immigration
-- **Applied AI** — applied AI, GEO, RAG, document AI
-- **Data & growth** — D2C personalization, shared data platforms
+- **Electric mobility / EV** — charging in Dubai, costs, buying an EV, home wallbox, CPOs, charging
+  times, EV vs petrol, fleet AI, electric chauffeur
+- **Migration** — UAE Golden Visa (overview + property route), freelance visa, moving to Dubai,
+  cost of living, Dubai vs Abu Dhabi, family sponsorship, AI in immigration
+- **Applied AI** — applied AI, AI agents, LLMs in production, RAG, vector databases, prompt
+  engineering, AI customer support, document AI, predictive maintenance
+- **AI & search** — Generative Engine Optimization (GEO), Answer Engine Optimization (AEO)
+- **Data & growth** — D2C personalization, retention analytics, AI in wellness, shared data
+  platforms, the modern data stack
 
-Add more via the admin or by extending `database/seeders/ResearchArticleSeeder.php`.
+Additional discoverability surfaces:
+
+- **`/glossary`** — 24 plain-English definitions with `DefinedTermSet` + `DefinedTerm` + `FAQPage`
+  schema (a concentrated long-tail + LLM-extraction asset)
+- **Category hub pages** (`/research?category=…`) with unique intro copy per topic (`config/research_topics.php`)
+
+Add or edit content via the admin, or extend `database/seeders/ResearchArticleSeeder.php`,
+`ResearchArticleSeederTwo.php`, `config/glossary.php` and `config/research_topics.php`.
 
 ## Local development
 

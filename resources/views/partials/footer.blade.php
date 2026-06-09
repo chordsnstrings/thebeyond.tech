@@ -27,6 +27,7 @@
                     <a href="{{ route('capabilities') }}">Capabilities</a>
                     <a href="{{ route('portfolio') }}">Portfolio</a>
                     <a href="{{ route('research.index') }}">Research</a>
+                    <a href="{{ route('glossary') }}">Glossary</a>
                 </div>
             </div>
 

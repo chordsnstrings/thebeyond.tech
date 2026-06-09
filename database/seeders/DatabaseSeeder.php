@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->seedCapabilities();
         $this->seedCompanies();
         $this->call(ResearchArticleSeeder::class);
+        $this->call(ResearchArticleSeederTwo::class);
     }
 
     protected function seedAdmin(): void

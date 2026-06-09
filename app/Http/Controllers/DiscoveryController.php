@@ -39,6 +39,7 @@ class DiscoveryController extends Controller
             'Capabilities' => '/capabilities',
             'Portfolio' => '/portfolio',
             'Research' => '/research',
+            'Glossary' => '/glossary',
             'Contact' => '/contact',
         ] as $label => $path) {
             $lines[] = "- [{$label}](".url($path).')';
@@ -60,6 +61,12 @@ class DiscoveryController extends Controller
         $lines[] = '## Research & guides';
         foreach ($articles as $article) {
             $lines[] = '- ['.$article->title.']('.url('/research/'.$article->slug).'): '.$article->excerpt;
+        }
+        $lines[] = '';
+
+        $lines[] = '## Glossary (key terms)';
+        foreach (config('glossary') as $term) {
+            $lines[] = "- **{$term['term']}**: {$term['definition']}";
         }
         $lines[] = '';
 

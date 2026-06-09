@@ -24,8 +24,10 @@ class ResearchController extends Controller
             ->select('category')->distinct()->orderBy('category')->pluck('category');
 
         $title = 'Research & Insights';
+        $topicIntro = null;
         if ($category) {
             $title = $category.' — Research';
+            $topicIntro = config('research_topics.'.$category);
         }
 
         $seo = Seo::make(
@@ -42,7 +44,7 @@ class ResearchController extends Controller
             ],
         );
 
-        return view('pages.research-index', compact('seo', 'articles', 'categories', 'query', 'category'));
+        return view('pages.research-index', compact('seo', 'articles', 'categories', 'query', 'category', 'topicIntro'));
     }
 
     public function show(ResearchArticle $article)
