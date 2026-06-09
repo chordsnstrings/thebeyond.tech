@@ -3,6 +3,10 @@
 This is a standard Laravel app. SiteGround runs it natively over SSH + Composer. Assets are
 pre-built and committed (`public/build`), so **no Node/npm is required on the server**.
 
+> This page is the **server runbook** (first-time bootstrap + update commands). For the
+> developer-facing picture — local setup, the build-and-commit-assets contract, the release
+> lifecycle, troubleshooting and rollback — see **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**.
+
 ## 1. Create the database
 
 In **Site Tools → Databases → MySQL**:

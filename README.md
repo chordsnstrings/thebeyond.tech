@@ -106,4 +106,6 @@ php artisan test
 
 ## Deployment
 
-See **[DEPLOY.md](DEPLOY.md)** for the SiteGround walkthrough.
+- **[DEPLOY.md](DEPLOY.md)** — SiteGround server runbook (first-time bootstrap + update commands).
+- **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** — developer deployment guide: the local→production
+  lifecycle, the build-and-commit-assets contract, environment variables, troubleshooting and rollback.
