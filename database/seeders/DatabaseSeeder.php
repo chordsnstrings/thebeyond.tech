@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->seedCompanies();
         $this->call(ResearchArticleSeeder::class);
         $this->call(ResearchArticleSeederTwo::class);
+        $this->call(ResearchArticleSeederThree::class);
+        $this->call(ResearchArticleSeederFour::class);
     }
 
     protected function seedAdmin(): void

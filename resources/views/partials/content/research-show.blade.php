@@ -29,6 +29,11 @@
     <section class="section--tight">
         <div class="container">
             <div class="prose">
+                <div class="quick-answer" aria-label="Quick answer">
+                    <span class="quick-answer__label">Quick answer</span>
+                    <p>{{ $article->excerpt }}</p>
+                </div>
+
                 @if(!empty($article->key_takeaways))
                     <aside class="takeaways" aria-label="Key takeaways">
                         <h2 style="margin-top:0">Key takeaways</h2>

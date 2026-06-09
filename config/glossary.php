@@ -126,4 +126,84 @@ return [
         'definition' => 'A set of cloud tools that ingest, store, transform and activate data — turning scattered raw data into reliable, decision-ready information.',
         'link' => '/research/building-a-modern-data-stack-a-starter-guide',
     ],
+    [
+        'term' => 'Machine Learning (ML)',
+        'definition' => 'A way of building software that learns patterns from data to make predictions or decisions, rather than being explicitly programmed with rules.',
+        'link' => '/research/what-is-machine-learning-a-plain-english-guide',
+    ],
+    [
+        'term' => 'Neural Network',
+        'definition' => 'A machine-learning model made of layers of connected units that transform data step by step to learn complex patterns; the basis of deep learning.',
+        'link' => '/research/what-are-neural-networks-a-simple-explanation',
+    ],
+    [
+        'term' => 'Supervised Learning',
+        'definition' => 'Machine learning that trains on labelled examples to predict a known outcome, such as classification or regression.',
+        'link' => '/research/supervised-vs-unsupervised-learning-explained',
+    ],
+    [
+        'term' => 'Unsupervised Learning',
+        'definition' => 'Machine learning that finds structure in unlabelled data, such as clustering similar items or detecting anomalies.',
+        'link' => '/research/supervised-vs-unsupervised-learning-explained',
+    ],
+    [
+        'term' => 'Fine-Tuning',
+        'definition' => 'Adapting a pre-trained model on additional data to shape its style, format or behaviour for a specific task.',
+        'link' => '/research/fine-tuning-vs-rag-which-should-you-use',
+    ],
+    [
+        'term' => 'AI Hallucination',
+        'definition' => 'A confident but incorrect output from an AI model, caused by predicting likely text rather than verified facts; reduced by grounding and oversight.',
+        'link' => '/research/ai-hallucinations-why-they-happen-and-how-to-reduce-them',
+    ],
+    [
+        'term' => 'Computer Vision',
+        'definition' => 'A field of AI that enables machines to interpret images and video — recognising objects, reading text and detecting defects.',
+        'link' => '/research/what-is-computer-vision-and-where-is-it-used',
+    ],
+    [
+        'term' => 'MLOps',
+        'definition' => 'Machine-learning operations: the practices for deploying, monitoring, retraining and governing ML models reliably in production.',
+        'link' => '/research/mlops-explained-running-machine-learning-in-production',
+    ],
+    [
+        'term' => 'Responsible AI',
+        'definition' => 'Designing and operating AI that is fair, transparent, accountable and safe, with appropriate human oversight for consequential decisions.',
+        'link' => '/research/responsible-ai-and-governance-a-practical-primer',
+    ],
+    [
+        'term' => 'Small Language Model (SLM)',
+        'definition' => 'A compact, cheaper, faster AI language model that can match larger models on focused tasks at a fraction of the cost.',
+        'link' => '/research/small-language-models-when-smaller-is-better',
+    ],
+    [
+        'term' => 'First-Party Data',
+        'definition' => 'Information collected directly from your own customers with consent — more durable and accurate than third-party data.',
+        'link' => '/research/first-party-data-strategy-after-third-party-cookies',
+    ],
+    [
+        'term' => 'A/B Testing',
+        'definition' => 'An experiment that shows two versions to different users and measures which performs better on a chosen metric, replacing opinion with evidence.',
+        'link' => '/research/ab-testing-how-to-run-experiments-that-actually-matter',
+    ],
+    [
+        'term' => 'Customer Lifetime Value (LTV)',
+        'definition' => 'An estimate of the total value a customer generates over their relationship with a business; it sets a ceiling on sensible acquisition spend.',
+        'link' => '/research/customer-lifetime-value-ltv-how-to-calculate-and-use-it',
+    ],
+    [
+        'term' => 'Marketing Attribution',
+        'definition' => 'Assigning credit for a conversion to the marketing touchpoints that contributed to it, to understand which channels drive results.',
+        'link' => '/research/marketing-attribution-explained',
+    ],
+    [
+        'term' => 'CCS (Combined Charging System)',
+        'definition' => 'An EV charging connector that extends the Type 2 plug with extra pins to enable high-power DC fast charging.',
+        'link' => '/research/ev-charging-connector-types-explained-type-2-ccs-and-more',
+    ],
+    [
+        'term' => 'Ejari',
+        'definition' => 'The system for registering tenancy contracts in Dubai, giving a lease official standing and often required for other resident services.',
+        'link' => '/research/renting-in-dubai-ejari-cheques-and-the-tenancy-basics',
+    ],
 ];

@@ -44,9 +44,10 @@ Built to be found by both classic search and AI answer engines (GEO/AEO):
 
 ### Content library
 
-The seeders ship a **34-article**, topic-clustered research library targeting winnable, high-intent
-demand (UAE/Dubai long-tail + applied-AI thought leadership), plus a **glossary** and **category
-hub pages**:
+The seeders ship a **66-article**, topic-clustered research library targeting winnable, high-intent
+demand (UAE/Dubai long-tail + applied-AI thought leadership), plus a **40-term glossary** and
+**category hub pages**. Every article opens with an AEO-friendly "Quick answer" block, and
+comparison articles include tables (favoured by featured snippets and answer engines):
 
 - **Electric mobility / EV** — charging in Dubai, costs, buying an EV, home wallbox, CPOs, charging
   times, EV vs petrol, fleet AI, electric chauffeur
@@ -60,12 +61,12 @@ hub pages**:
 
 Additional discoverability surfaces:
 
-- **`/glossary`** — 24 plain-English definitions with `DefinedTermSet` + `DefinedTerm` + `FAQPage`
+- **`/glossary`** — 40 plain-English definitions with `DefinedTermSet` + `DefinedTerm` + `FAQPage`
   schema (a concentrated long-tail + LLM-extraction asset)
 - **Category hub pages** (`/research?category=…`) with unique intro copy per topic (`config/research_topics.php`)
 
-Add or edit content via the admin, or extend `database/seeders/ResearchArticleSeeder.php`,
-`ResearchArticleSeederTwo.php`, `config/glossary.php` and `config/research_topics.php`.
+Add or edit content via the admin, or extend the `database/seeders/ResearchArticleSeeder*.php`
+files, `config/glossary.php` and `config/research_topics.php`.
 
 ## Local development
 

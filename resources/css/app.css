@@ -689,6 +689,66 @@ body::after {
     font-style: italic;
 }
 
+.prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 26px;
+    font-size: 15.5px;
+}
+
+.prose th,
+.prose td {
+    text-align: left;
+    padding: 12px 14px;
+    border: 1px solid var(--surface-line);
+    vertical-align: top;
+}
+
+.prose thead th {
+    background: var(--bg-elev);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.prose tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.prose code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: var(--bg-elev);
+    border: 1px solid var(--surface-line);
+    border-radius: 6px;
+    padding: 2px 6px;
+}
+
+/* AEO "quick answer" callout — a TL;DR engines and readers can lift */
+.quick-answer {
+    background: rgba(94, 234, 212, 0.06);
+    border: 1px solid rgba(94, 234, 212, 0.22);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 28px;
+}
+
+.quick-answer__label {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.quick-answer p {
+    margin-top: 8px;
+    color: var(--text);
+    font-size: 17px;
+}
+
 /* ----- Article extras (breadcrumb, takeaways, FAQ) ------------------------ */
 .breadcrumb {
     display: flex;
@@ -888,6 +948,49 @@ body::after {
         grid-template-columns: 1fr;
         gap: 8px;
     }
+}
+
+/* ----- Pagination --------------------------------------------------------- */
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.pagination__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid var(--surface-line);
+    border-radius: 10px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-dim);
+    transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.pagination__link:hover {
+    color: var(--accent);
+    border-color: var(--surface-line-strong);
+}
+
+.pagination__link.is-active {
+    color: #04201b;
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.pagination__link.is-disabled {
+    opacity: 0.35;
+}
+
+.pagination__dots {
+    color: var(--text-faint);
+    padding: 0 4px;
 }
 
 /* ----- Forms -------------------------------------------------------------- */

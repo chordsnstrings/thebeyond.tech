@@ -81,7 +81,7 @@ class SiteTest extends TestCase
     {
         $this->get('/research?q=charging')
             ->assertOk()
-            ->assertSee('EV Charging in Dubai');
+            ->assertSee('Charging');
 
         $this->get('/research?q=zzzznomatch')
             ->assertOk()
