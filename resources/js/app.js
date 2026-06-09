@@ -61,5 +61,40 @@ document.querySelectorAll('.prose table').forEach((table) => {
     wrap.appendChild(table);
 });
 
+/* ----- Micro-interactions ----- */
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Click ripple on buttons */
+document.querySelectorAll('.btn').forEach((btn) => {
+    btn.addEventListener('pointerdown', (e) => {
+        if (reduceMotion) return;
+        const r = btn.getBoundingClientRect();
+        const size = Math.max(r.width, r.height);
+        const span = document.createElement('span');
+        span.className = 'ripple';
+        span.style.width = span.style.height = `${size}px`;
+        span.style.left = `${e.clientX - r.left - size / 2}px`;
+        span.style.top = `${e.clientY - r.top - size / 2}px`;
+        btn.appendChild(span);
+        span.addEventListener('animationend', () => span.remove());
+    });
+});
+
+/* Magnetic pull on primary CTAs (pointer devices only) */
+if (!reduceMotion && window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.btn--primary, [data-magnetic]').forEach((el) => {
+        const strength = 0.28;
+        el.addEventListener('pointermove', (e) => {
+            const r = el.getBoundingClientRect();
+            const mx = e.clientX - (r.left + r.width / 2);
+            const my = e.clientY - (r.top + r.height / 2);
+            el.style.transform = `translate(${(mx * strength).toFixed(1)}px, ${(my * strength).toFixed(1)}px)`;
+        });
+        el.addEventListener('pointerleave', () => {
+            el.style.transform = '';
+        });
+    });
+}
+
 /* ----- Hero ----- */
 initHero(document.querySelector('[data-hero]'));
