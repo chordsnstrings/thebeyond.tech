@@ -376,6 +376,12 @@ body::after {
     max-width: 16ch;
 }
 
+/* Word groups keep letters together so the headline wraps at spaces, not mid-word */
+.hero__title .word {
+    display: inline-block;
+    white-space: nowrap;
+}
+
 /* Per-letter spans for the cursor-reactive effect */
 .hero__title .ch {
     display: inline-block;

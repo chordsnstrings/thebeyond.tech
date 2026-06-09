@@ -1,16 +1,18 @@
 @php
-    // Split a string into per-letter spans for the cursor-reactive effect.
+    // Build per-letter spans (.ch) for the cursor-reactive effect, grouped into
+    // non-breaking word spans so the headline wraps at spaces — never mid-word.
     $letters = function (string $text, bool $accent = false) {
-        $out = '';
-        foreach (preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY) as $ch) {
-            if ($ch === ' ') {
-                $out .= '<span class="ch">&nbsp;</span>';
-            } else {
-                $cls = 'ch'.($accent ? ' accent' : '');
-                $out .= '<span class="'.$cls.'">'.e($ch).'</span>';
+        $cls = 'ch'.($accent ? ' accent' : '');
+        $words = preg_split('/\s+/u', trim($text), -1, PREG_SPLIT_NO_EMPTY);
+        $out = [];
+        foreach ($words as $word) {
+            $chars = '';
+            foreach (preg_split('//u', $word, -1, PREG_SPLIT_NO_EMPTY) as $ch) {
+                $chars .= '<span class="'.$cls.'">'.e($ch).'</span>';
             }
+            $out[] = '<span class="word">'.$chars.'</span>';
         }
-        return $out;
+        return implode(' ', $out);
     };
 @endphp
 
@@ -20,7 +22,7 @@
         <span class="eyebrow hero__eyebrow" data-reveal>ARKS Groups · Technology, AI &amp; Research</span>
 
         <h1 class="hero__title" aria-label="We engineer what comes next.">
-            {!! $letters('We engineer ') !!}{!! $letters('what comes ') !!}{!! $letters('next.', true) !!}
+            {!! $letters('We engineer') !!} {!! $letters('what comes') !!} {!! $letters('next.', true) !!}
         </h1>
 
         <p class="hero__sub" data-reveal>

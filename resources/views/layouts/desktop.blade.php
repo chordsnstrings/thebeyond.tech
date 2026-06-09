@@ -12,6 +12,11 @@
     @include('partials.meta')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
+
+    {{-- Scroll-reveal content is hidden until JS adds .is-visible; reveal it when JS is unavailable. --}}
+    <noscript>
+        <style>[data-reveal]{opacity:1!important;transform:none!important}</style>
+    </noscript>
 </head>
 <body>
     @include('partials.nav')
