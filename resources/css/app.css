@@ -1562,14 +1562,123 @@ body::after {
     50% { background-position: 100% 50%; }
 }
 
-/* ----- Touch devices: quick tap feedback ----- */
+/* ==========================================================================
+   Mobile / touch-specific interactions
+   Touch has no :hover, so mirror the key hover flourishes onto :active (tap),
+   kill the default grey tap flash, and add two touch-native affordances:
+   a scroll reading-progress bar and a back-to-top button.
+   ========================================================================== */
+
+/* Replace the default grey tap highlight with our own :active states */
+a, button, .btn, .card, .article-card, .chip, .tag, .pagination__link, summary, .to-top {
+    -webkit-tap-highlight-color: transparent;
+}
+
 @media (hover: none) {
+    /* Tactile press on the main interactive surfaces */
     .card:active,
     .article-card:active,
     .chip:active,
     .tag:active,
-    .pagination__link:active {
-        transform: scale(0.98);
+    .pagination__link:active,
+    .glossary__item:active {
+        transform: scale(0.985);
+    }
+
+    /* Mirror the desktop hover delight onto tap */
+    .card:active .card__icon {
+        transform: translateY(-2px) scale(1.07) rotate(-3deg);
+        background: rgba(94, 234, 212, 0.14);
+        border-color: var(--accent);
+    }
+
+    .card:active::before {
+        opacity: 1;
+    }
+
+    .article-card:active h3 {
+        color: var(--accent);
+    }
+
+    .article-card:active .article-card__more {
+        transform: translateX(5px);
+    }
+
+    .nav__links a:active::after {
+        transform: scaleX(1);
+    }
+
+    .company:active .company__name,
+    .company__link:active,
+    .glossary__item:active dt,
+    .footer__links a:active {
+        color: var(--accent);
+    }
+
+    .chip:active,
+    .tag:active {
+        color: var(--accent);
+        border-color: var(--surface-line-strong);
+    }
+}
+
+/* ----- Scroll reading-progress bar (injected by app.js) ----- */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    z-index: 200;
+    transform: scaleX(var(--progress, 0));
+    transform-origin: left;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    pointer-events: none;
+    will-change: transform;
+}
+
+/* ----- Back-to-top button (injected by app.js; touch / small screens) ----- */
+.to-top {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 150;
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--surface-line-strong);
+    background: color-mix(in srgb, var(--bg-elev) 86%, transparent);
+    backdrop-filter: blur(10px);
+    color: var(--accent);
+    opacity: 0;
+    transform: translateY(12px) scale(0.9);
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease),
+        border-color 0.2s var(--ease);
+}
+
+.to-top.is-visible {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+
+.to-top:active {
+    transform: scale(0.92);
+    border-color: var(--accent);
+}
+
+.to-top svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Only surface the FAB where it earns its keep: touch or narrow viewports */
+@media (hover: hover) and (min-width: 641px) {
+    .to-top {
+        display: none;
     }
 }
 

@@ -96,5 +96,36 @@ if (!reduceMotion && window.matchMedia('(hover: hover)').matches) {
     });
 }
 
+/* ----- Scroll reading-progress bar + back-to-top (touch-native affordances) ----- */
+(() => {
+    const bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    bar.setAttribute('aria-hidden', 'true');
+
+    const toTop = document.createElement('button');
+    toTop.className = 'to-top';
+    toTop.type = 'button';
+    toTop.setAttribute('aria-label', 'Back to top');
+    toTop.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>';
+
+    document.body.append(bar, toTop);
+
+    const update = () => {
+        const scrolled = window.scrollY;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.setProperty('--progress', max > 0 ? (scrolled / max).toFixed(4) : 0);
+        toTop.classList.toggle('is-visible', scrolled > window.innerHeight * 0.8);
+    };
+
+    toTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+})();
+
 /* ----- Hero ----- */
 initHero(document.querySelector('[data-hero]'));
