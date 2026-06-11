@@ -88,6 +88,19 @@ class SiteTest extends TestCase
             ->assertSee('No articles match');
     }
 
+    public function test_distinct_categories_query_is_strict_mode_safe(): void
+    {
+        // Regression: a SELECT DISTINCT ordered by a non-selected column (e.g.
+        // published_at inherited from the published() scope) throws MySQL error
+        // 3065 under ONLY_FULL_GROUP_BY. SQLite tolerates it, so the HTTP tests
+        // can't catch it — assert the SQL shape directly.
+        $sql = \App\Models\ResearchArticle::published()->distinctCategories()->toSql();
+        $orderBy = substr($sql, stripos($sql, 'order by'));
+
+        $this->assertStringNotContainsString('published_at', $orderBy);
+        $this->assertStringContainsString('category', $orderBy);
+    }
+
     public function test_home_emits_website_schema_with_search_action(): void
     {
         $this->get('/')

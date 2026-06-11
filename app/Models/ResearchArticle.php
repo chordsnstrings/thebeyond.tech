@@ -32,6 +32,19 @@ class ResearchArticle extends Model
             ->orderByDesc('published_at');
     }
 
+    /**
+     * Distinct list of categories, safe for MySQL ONLY_FULL_GROUP_BY.
+     *
+     * reorder() drops any inherited ordering (e.g. the published() scope's
+     * orderByDesc('published_at')): a SELECT DISTINCT ordered by a column that
+     * is not in the SELECT list raises MySQL error 3065, even though SQLite
+     * tolerates it. Keep the ORDER BY limited to the selected column.
+     */
+    public function scopeDistinctCategories($query)
+    {
+        return $query->select('category')->distinct()->reorder('category');
+    }
+
     public function scopeSearch($query, ?string $term)
     {
         if (! $term) {

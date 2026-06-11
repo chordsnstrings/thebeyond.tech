@@ -20,8 +20,7 @@ class ResearchController extends Controller
             ->paginate(9)
             ->withQueryString();
 
-        $categories = ResearchArticle::published()
-            ->select('category')->distinct()->orderBy('category')->pluck('category');
+        $categories = ResearchArticle::published()->distinctCategories()->pluck('category');
 
         $title = 'Research & Insights';
         $topicIntro = null;
